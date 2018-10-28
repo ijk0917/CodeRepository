@@ -11,14 +11,25 @@ public class TestImpl implements Test {
     public void ttt() {
 
     }
-    public static void main(String[] args){
+    public static void main(String[] args) {
 //        List<String> totalList = new ArrayList<>();
 //        List<String> list = new ArrayList<>();
 //        totalList.addAll(list);
-        List<String> totalList = null;
-        if( null != totalList &&  !totalList.isEmpty() ){
-            System.out.println("12346");
-        }else System.out.println("456");
+////        List<String> totalList = null;
+//        if (null != totalList && !totalList.isEmpty()) {
+//            System.out.println("12346");
+//        } else System.out.println("456");
+////        System.out.println(totalList.size());
+
+        try{
+            float a = 1/0;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+//        finally {
+//            System.out.println("finally");
+//        }
+        System.out.println("end");
 
     }
 }

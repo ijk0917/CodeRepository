@@ -89,8 +89,8 @@ public class FootballKJScratcher {
             return Integer.valueOf(Page);
         }catch (Exception e){
             e.printStackTrace();
-            return new Integer(1);
         }
+        return new Integer(1);
     }
 
     //设置url
@@ -104,31 +104,36 @@ public class FootballKJScratcher {
         if(!StringUtils.isEmpty(this.end_date)){
             URL.append("&end_date="+this.end_date);
         }
-        logger.info("URL.toString(): " + URL.toString());
+//        logger.info("URL.toString(): " + URL.toString());
         return URL.toString();
     }
 
+
+
     //组装比赛数据
     public void getMatchList(Elements matchList){
-        for (int i = 0; i < matchList.size()-1; i++) {
+        for (int i = 0; i < matchList.size()-JCScratcherConstant.JCMatchListNumber; i++) {
             Element tr = matchList.get(i);
             Elements tds = tr.select("td");
             for (int j = 0; j < tds.size(); j++) {
                 Element td = tds.get(j);
-                if(j == 3)
-                logger.info("td[" + j + "]: " + td.text());
+//                if(j == 3) {
+//                    logger.info("td[" + j + "]: " + td.text());
+//                }
 
                 //详情
                 if (10 == j) {
                     String uurl = td.select("a").attr("href");
 //                    logger.info("uurl: " + uurl);
                     if (!StringUtils.isEmpty(uurl)) {
+                        //开奖
                         String[] strings = uurl.split("=");
                         String mid = strings[1];
                         //再次抓包
-//                        FootballKJJsonScratcher footballKJJsonScratcher = new FootballKJJsonScratcher(jsonUrl + mid);
-//                        String json = footballKJJsonScratcher.scratch();
+                        FootballKJJsonScratcher footballKJJsonScratcher = new FootballKJJsonScratcher(jsonUrl + mid);
+                        String json = footballKJJsonScratcher.scratch();
 //                            logger.info("json: " + json);
+
                     } else {
                         //未开奖
                     }
@@ -143,6 +148,9 @@ public class FootballKJScratcher {
 
     public Map<String, List<String>> scratch() {
         if (null == url || "".equals(url)) return null;
+        if (logger.isInfoEnabled()) {
+            logger.info("开始抓取竞彩网竞足开奖数据");
+        }
         Map<String, List<String>> retVal = new HashMap<String, List<String>>();
         try {
             Document doc = Jsoup.connect(URL()).userAgent("Mozilla").maxBodySize(1024 * 1024 * 10).timeout(1800000).get();
@@ -156,10 +164,10 @@ public class FootballKJScratcher {
 
             //翻页
             Integer Page = fianlPageNumber(pages);
-            logger.info("Page: "+Page);
+//            logger.info("Page: "+Page);
             for(int p = 2;p<=Page ;p++) {
                 this.page=p;
-                logger.info("this.page: " +this.page);
+//                logger.info("this.page: " +this.page);
                 //重新抓取下一页的包
                 doc = Jsoup.connect(URL()).userAgent("Mozilla").maxBodySize(1024 * 1024 * 10).timeout(1800000).get();
                 matchList = doc.select("body > div.all-wrap.m-min > div.match_list > table > tbody >tr");
@@ -168,12 +176,13 @@ public class FootballKJScratcher {
                 getMatchList(matchList);
             }
             if (logger.isInfoEnabled()) {
-                logger.info("结束抓取竞篮开奖数据");
+                logger.info("结束抓取竞彩网竞足开奖数据");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("抓包失败");
+            logger.error("竞彩网竞足开奖数据抓包失败");
         }
+        logger.info("比赛总数： " + FootballKJJsonScratcher.total);
         return retVal;
     }
 
@@ -188,8 +197,8 @@ public class FootballKJScratcher {
             scratcher.setUrl(url);
             scratcher.setJsonUrl(jsonUrl);
             SimpleDateFormat sdf1 =new SimpleDateFormat("yyyy-MM-dd" );
-            Date data= new Date();
-            String time = sdf1.format(data);
+            Date date= new Date();
+            String time = sdf1.format(date);
             scratcher.setStart_date(time);
             scratcher.setEnd_date(time);
             scratcher.scratch();
