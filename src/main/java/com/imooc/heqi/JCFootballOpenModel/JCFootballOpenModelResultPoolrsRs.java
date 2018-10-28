@@ -1,6 +1,6 @@
-package com.imooc.heqi.scratcherModel;
+package com.imooc.heqi.JCFootballOpenModel;
 
-public class JCFootballKaiJiangModelResultPoolrsRs {
+public class JCFootballOpenModelResultPoolrsRs {
     private String pool_rs;
     private String prs_name;
     private String goalline;

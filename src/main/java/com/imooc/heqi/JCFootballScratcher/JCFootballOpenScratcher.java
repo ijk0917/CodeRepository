@@ -1,7 +1,6 @@
-package com.imooc.heqi.scratcher;
+package com.imooc.heqi.JCFootballScratcher;
 
-import com.imooc.heqi.util.JCScratcherConstant;
-import freemarker.template.utility.StringUtil;
+import com.imooc.heqi.util.JCFootballScratcherConstant;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,21 +9,14 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FootballKJScratcher {
-    private static final Logger logger = LoggerFactory.getLogger(FootballKJScratcher.class);
+public class JCFootballOpenScratcher {
+    private static final Logger logger = LoggerFactory.getLogger(JCFootballOpenScratcher.class);
 
     private String url;
     private String jsonUrl;
@@ -82,7 +74,7 @@ public class FootballKJScratcher {
             if(pages.size() == 1){
                 return new Integer(1);
             }
-            Element element = pages.get(pages.size() - JCScratcherConstant.JCPageNumber);
+            Element element = pages.get(pages.size() - JCFootballScratcherConstant.JCPageNumber);
             String Page = element.select("a").attr("href");
             Page = StringUtils.substringBetween(Page, "page=", "&");
 //            logger.info("Page: " + Page);
@@ -112,7 +104,7 @@ public class FootballKJScratcher {
 
     //组装比赛数据
     public void getMatchList(Elements matchList){
-        for (int i = 0; i < matchList.size()-JCScratcherConstant.JCMatchListNumber; i++) {
+        for (int i = 0; i < matchList.size()- JCFootballScratcherConstant.JCMatchListNumber; i++) {
             Element tr = matchList.get(i);
             Elements tds = tr.select("td");
             for (int j = 0; j < tds.size(); j++) {
@@ -130,7 +122,7 @@ public class FootballKJScratcher {
                         String[] strings = uurl.split("=");
                         String mid = strings[1];
                         //再次抓包
-                        FootballKJJsonScratcher footballKJJsonScratcher = new FootballKJJsonScratcher(jsonUrl + mid);
+                        JCFootballOpenJsonScratcher footballKJJsonScratcher = new JCFootballOpenJsonScratcher(jsonUrl + mid);
                         String json = footballKJJsonScratcher.scratch();
 //                            logger.info("json: " + json);
 
@@ -182,7 +174,7 @@ public class FootballKJScratcher {
             e.printStackTrace();
             logger.error("竞彩网竞足开奖数据抓包失败");
         }
-        logger.info("比赛总数： " + FootballKJJsonScratcher.total);
+        logger.info("比赛总数： " + JCFootballOpenJsonScratcher.total);
         return retVal;
     }
 
@@ -193,7 +185,7 @@ public class FootballKJScratcher {
         try {
             String url = "http://info.sporttery.cn/football/match_result.php";
             String jsonUrl = "http://i.sporttery.cn/api/fb_match_info/get_pool_rs/?f_callback=pool_prcess&mid=";
-            FootballKJScratcher scratcher = new FootballKJScratcher();
+            JCFootballOpenScratcher scratcher = new JCFootballOpenScratcher();
             scratcher.setUrl(url);
             scratcher.setJsonUrl(jsonUrl);
             SimpleDateFormat sdf1 =new SimpleDateFormat("yyyy-MM-dd" );

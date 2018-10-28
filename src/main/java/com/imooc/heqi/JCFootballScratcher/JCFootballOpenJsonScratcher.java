@@ -1,33 +1,23 @@
-package com.imooc.heqi.scratcher;
+package com.imooc.heqi.JCFootballScratcher;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.imooc.heqi.scratcherModel.JCFootballKaiJiangModel;
+import com.imooc.heqi.JCFootballOpenModel.JCFootballOpenModel;
 import com.imooc.heqi.util.HttpUtils;
-import freemarker.template.utility.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-public class FootballKJJsonScratcher {
-    private static final Logger logger = LoggerFactory.getLogger(FootballKJJsonScratcher.class);
+public class JCFootballOpenJsonScratcher {
+    private static final Logger logger = LoggerFactory.getLogger(JCFootballOpenJsonScratcher.class);
 
     private String url;
 
-    public FootballKJJsonScratcher() {
+    public JCFootballOpenJsonScratcher() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    public FootballKJJsonScratcher(String url) {
+    public JCFootballOpenJsonScratcher(String url) {
         super();
         this.url = url;
     }
@@ -57,7 +47,7 @@ public class FootballKJJsonScratcher {
 //                }
 
                 logger.info("开始转换！");
-                JCFootballKaiJiangModel jcFootballKaiJiangModel = gson.fromJson(json,JCFootballKaiJiangModel.class);
+                JCFootballOpenModel jcFootballKaiJiangModel = gson.fromJson(json, JCFootballOpenModel.class);
                 logger.info("-------------------------------jcFootballKaiJiangModel: " + jcFootballKaiJiangModel.getResult().getPool_rs().getHad().getPrs_name());
                 //TODO
             }
@@ -87,7 +77,7 @@ public class FootballKJJsonScratcher {
     public static void main(String[] args) {
         try {
             String url = "http://i.sporttery.cn/api/fb_match_info/get_pool_rs/?f_callback=pool_prcess&mid=112538";
-            FootballKJJsonScratcher scratcher = new FootballKJJsonScratcher(url);
+            JCFootballOpenJsonScratcher scratcher = new JCFootballOpenJsonScratcher(url);
             scratcher.scratch();
         } catch (Exception e) {
             e.printStackTrace();

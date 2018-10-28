@@ -1,6 +1,6 @@
-package com.imooc.heqi.scratcherModel;
+package com.imooc.heqi.JCFootballOpenModel;
 
-public class JCFootballKaiJiangModelStatus {
+public class JCFootballOpenModelStatus {
     private Integer code;
     private String message;
 
