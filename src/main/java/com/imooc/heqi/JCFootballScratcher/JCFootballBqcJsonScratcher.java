@@ -1,22 +1,20 @@
 package com.imooc.heqi.JCFootballScratcher;
 
-import com.imooc.heqi.util.JCFootballScratcherConstant;
+import com.google.gson.Gson;
+import com.imooc.heqi.JCFootballSpfModel.JCFootballModel;
+import com.imooc.heqi.util.HttpUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JCFootballSpfScratcher {
-    private static final Logger logger = LoggerFactory.getLogger(JCFootballSpfScratcher.class);
+public class JCFootballBqcJsonScratcher {
+    private static final Logger logger = LoggerFactory.getLogger(JCFootballBqcJsonScratcher.class);
 
     private String url;
 
@@ -57,13 +55,25 @@ public class JCFootballSpfScratcher {
         }
         Map<String, List<String>> retVal = new HashMap<String, List<String>>();
         try {
-            Document doc = Jsoup.connect(url).userAgent("Mozilla").maxBodySize(1024 * 1024 * 10).timeout(1800000).get();
-            Elements matchList = doc.select("#list_112745 > td.vsTd > label:nth-child(1)");
-            logger.info("matchList: "+ matchList);
-            if(null == matchList)return  null;
+            String json = new String();
+            json = HttpUtils.doGet(url);
+            json = StringUtils.substringBetween(json, "getData(", ");");
+            logger.info("json: " + json);
 
-            //组装比赛数据
-            getMatchList(matchList);
+            if (!StringUtils.isEmpty(json)) {
+                //开奖信息注入
+                Gson gson = new Gson();
+                logger.info("开始转换！");
+                JCFootballModel jcFootballSpfModel = gson.fromJson(json, JCFootballModel.class);
+                for(Map.Entry<String,Map<String ,Object>> entry:jcFootballSpfModel.getData().entrySet()){
+                    Map<String ,Object> map = entry.getValue();
+                    logger.info("h_cn" + map.get("h_cn").toString());
+                }
+
+//                logger.info("-------------------------------jcFootballSpfModel: " + jcFootballSpfModel.getData());
+//                logger.info("-------------------------------jcFootballSpfModel: " + jcFootballSpfModel.getData().get(0).get("a_cn"));
+                //TODO
+            }
 
 
             if (logger.isInfoEnabled()) {
@@ -81,8 +91,8 @@ public class JCFootballSpfScratcher {
 
     public static void main(String[] args) {
         try {
-            String url = "http://info.sporttery.cn/football/hhad_list.php";
-            JCFootballSpfScratcher scratcher = new JCFootballSpfScratcher();
+            String url = "http://i.sporttery.cn/odds_calculator/get_odds?i_format=json&i_callback=getData&poolcode[]=hafu";
+            JCFootballBqcJsonScratcher scratcher = new JCFootballBqcJsonScratcher();
             scratcher.setUrl(url);
             scratcher.scratch();
         } catch (Exception e) {
