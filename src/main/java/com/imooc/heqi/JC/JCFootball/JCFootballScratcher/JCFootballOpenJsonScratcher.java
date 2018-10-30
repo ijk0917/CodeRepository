@@ -1,7 +1,7 @@
-package com.imooc.heqi.JCFootballScratcher;
+package com.imooc.heqi.JC.JCFootball.JCFootballScratcher;
 
 import com.google.gson.Gson;
-import com.imooc.heqi.JCFootballOpenModel.JCFootballOpenModel;
+import com.imooc.heqi.JC.JCFootball.JCFootballOpenModel.JCFootballOpenModel;
 import com.imooc.heqi.util.HttpUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

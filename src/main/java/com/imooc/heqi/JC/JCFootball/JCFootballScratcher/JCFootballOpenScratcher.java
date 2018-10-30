@@ -1,4 +1,4 @@
-package com.imooc.heqi.JCFootballScratcher;
+package com.imooc.heqi.JC.JCFootball.JCFootballScratcher;
 
 import com.imooc.heqi.util.JCFootballScratcherConstant;
 import org.apache.commons.lang3.StringUtils;

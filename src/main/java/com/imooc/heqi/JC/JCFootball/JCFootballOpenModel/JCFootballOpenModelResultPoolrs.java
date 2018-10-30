@@ -1,4 +1,4 @@
-package com.imooc.heqi.JCFootballOpenModel;
+package com.imooc.heqi.JC.JCFootball.JCFootballOpenModel;
 
 public class JCFootballOpenModelResultPoolrs {
     private JCFootballOpenModelResultPoolrsRs crs;

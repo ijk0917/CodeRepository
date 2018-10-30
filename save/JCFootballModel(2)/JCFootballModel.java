@@ -1,17 +1,17 @@
-package com.imooc.heqi.JCFootballSpfModel;
+package com.imooc.heqi.JC.JCFootball.JCFootballModel;
 
 import java.util.Map;
 
 public class JCFootballModel {
-    private Map<String ,Map<String,Object>> data;
+    private Map<String , JCFootballInfoModel> data;
 
     private Object status;
 
-    public Map<String, Map<String, Object>> getData() {
+    public Map<String, JCFootballInfoModel> getData() {
         return data;
     }
 
-    public void setData(Map<String, Map<String, Object>> data) {
+    public void setData(Map<String, JCFootballInfoModel> data) {
         this.data = data;
     }
 

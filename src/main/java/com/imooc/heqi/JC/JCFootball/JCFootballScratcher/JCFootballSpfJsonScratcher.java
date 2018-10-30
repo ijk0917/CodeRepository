@@ -1,11 +1,10 @@
-package com.imooc.heqi.JCFootballScratcher;
+package com.imooc.heqi.JC.JCFootball.JCFootballScratcher;
 
 import com.google.gson.Gson;
-import com.imooc.heqi.JCFootballSpfModel.JCFootballModel;
+import com.imooc.heqi.JC.JCFootball.JCFootballModel.JCFootballInfoModel;
+import com.imooc.heqi.JC.JCFootball.JCFootballModel.JCFootballModel;
 import com.imooc.heqi.util.HttpUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,26 +25,6 @@ public class JCFootballSpfJsonScratcher {
         this.url = url;
     }
 
-    //组装比赛数据
-    public void getMatchList(Elements matchList){
-        for (int i = 0; i < matchList.size(); i++) {
-            Element tr = matchList.get(i);
-            Elements tds = tr.select("td");
-            if(1 == tds.size()) continue;
-            for (int j = 0; j < tds.size(); j++) {
-                Element td = tds.get(j);
-                if(3 == j) logger.info("队名： " + tds.get(j).text());
-//                if(j == 3) {
-//                    logger.info("td[" + j + "]: " + td.text());
-//                }
-
-
-
-            }
-//            logger.info("----------------------------------------");
-        }
-    }
-
 
 
     public Map<String, List<String>> scratch() {
@@ -58,6 +37,7 @@ public class JCFootballSpfJsonScratcher {
             String json = new String();
             json = HttpUtils.doGet(url);
             json = StringUtils.substringBetween(json, "getData(", ");");
+            json = json.replaceAll("int","intt");
             logger.info("json: " + json);
 
             if (!StringUtils.isEmpty(json)) {
@@ -65,13 +45,16 @@ public class JCFootballSpfJsonScratcher {
                 Gson gson = new Gson();
                 logger.info("开始转换！");
                 JCFootballModel jcFootballSpfModel = gson.fromJson(json, JCFootballModel.class);
-                for(Map.Entry<String,Map<String ,Object>> entry:jcFootballSpfModel.getData().entrySet()){
-                    Map<String ,Object> map = entry.getValue();
-                    logger.info("h_cn" + map.get("h_cn").toString());
+                for(Map.Entry<String, JCFootballInfoModel> entry:jcFootballSpfModel.getData().entrySet()){
+                    JCFootballInfoModel result = entry.getValue();
+                    logger.info(
+                                "胜：" + result.getSpf().getS() + " " +
+                                "平：" + result.getSpf().getP() + " " +
+                                "负：" + result.getSpf().getF() + " " +
+                                        "123: " + result.getSpf().getIntt()
+                                );
                 }
 
-//                logger.info("-------------------------------jcFootballSpfModel: " + jcFootballSpfModel.getData());
-//                logger.info("-------------------------------jcFootballSpfModel: " + jcFootballSpfModel.getData().get(0).get("a_cn"));
                 //TODO
             }
 
