@@ -1,8 +1,9 @@
 package com.imooc.heqi.JC.JCFootball.JCFootballScratcher;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.imooc.heqi.JC.JCFootball.JCFootballModel.JCFootballInfoModel;
-import com.imooc.heqi.JC.JCFootball.JCFootballModel.JCFootballModel;
+import com.imooc.heqi.JC.JCFootball.JCFootballModel.JCFootballSpfInfoModel;
 import com.imooc.heqi.util.HttpUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -44,15 +45,11 @@ public class JCFootballSpfJsonScratcher {
                 //开奖信息注入
                 Gson gson = new Gson();
                 logger.info("开始转换！");
-                JCFootballModel jcFootballSpfModel = gson.fromJson(json, JCFootballModel.class);
-                for(Map.Entry<String, JCFootballInfoModel> entry:jcFootballSpfModel.getData().entrySet()){
-                    JCFootballInfoModel result = entry.getValue();
-                    logger.info(
-                                "胜：" + result.getSpf().getS() + " " +
-                                "平：" + result.getSpf().getP() + " " +
-                                "负：" + result.getSpf().getF() + " " +
-                                        "123: " + result.getSpf().getIntt()
-                                );
+                JCFootballInfoModel<JCFootballSpfInfoModel> jcFootballModel = gson.fromJson(json, new TypeToken<JCFootballInfoModel<JCFootballSpfInfoModel>>() {}.getType());
+                for(Map.Entry<String,JCFootballSpfInfoModel> entry:jcFootballModel.getData().entrySet()){
+                    JCFootballSpfInfoModel result = entry.getValue();
+                    logger.info("p_code: " + result.getP_code());
+                    logger.info("a: " + result.getF());
                 }
 
                 //TODO

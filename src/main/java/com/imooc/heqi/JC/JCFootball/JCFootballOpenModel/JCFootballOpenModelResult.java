@@ -2,7 +2,7 @@ package com.imooc.heqi.JC.JCFootball.JCFootballOpenModel;
 
 public class JCFootballOpenModelResult {
     private JCFootballOpenModelResultPoolrs pool_rs;
-    private Object odds_list;
+    private JCFootballOpenModelResultOddslist odds_list;
 
     public JCFootballOpenModelResultPoolrs getPool_rs() {
         return pool_rs;
@@ -12,11 +12,11 @@ public class JCFootballOpenModelResult {
         this.pool_rs = pool_rs;
     }
 
-    public Object getOdds_list() {
+    public JCFootballOpenModelResultOddslist getOdds_list() {
         return odds_list;
     }
 
-    public void setOdds_list(Object odds_list) {
+    public void setOdds_list(JCFootballOpenModelResultOddslist odds_list) {
         this.odds_list = odds_list;
     }
 }

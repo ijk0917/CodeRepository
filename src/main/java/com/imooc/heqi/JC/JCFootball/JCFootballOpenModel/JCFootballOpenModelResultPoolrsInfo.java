@@ -1,6 +1,6 @@
 package com.imooc.heqi.JC.JCFootball.JCFootballOpenModel;
 
-public class JCFootballOpenModelResultPoolrsRs {
+public class JCFootballOpenModelResultPoolrsInfo {
     private String pool_rs;
     private String prs_name;
     private String goalline;

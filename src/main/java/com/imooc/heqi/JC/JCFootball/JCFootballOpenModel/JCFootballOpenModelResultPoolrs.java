@@ -1,49 +1,49 @@
 package com.imooc.heqi.JC.JCFootball.JCFootballOpenModel;
 
 public class JCFootballOpenModelResultPoolrs {
-    private JCFootballOpenModelResultPoolrsRs crs;
-    private JCFootballOpenModelResultPoolrsRs had;
-    private JCFootballOpenModelResultPoolrsRs hafu;
-    private JCFootballOpenModelResultPoolrsRs hhad;
-    private JCFootballOpenModelResultPoolrsRs ttg;
+    private JCFootballOpenModelResultPoolrsInfo crs;
+    private JCFootballOpenModelResultPoolrsInfo had;
+    private JCFootballOpenModelResultPoolrsInfo hafu;
+    private JCFootballOpenModelResultPoolrsInfo hhad;
+    private JCFootballOpenModelResultPoolrsInfo ttg;
 
-    public JCFootballOpenModelResultPoolrsRs getCrs() {
+    public JCFootballOpenModelResultPoolrsInfo getCrs() {
         return crs;
     }
 
-    public void setCrs(JCFootballOpenModelResultPoolrsRs crs) {
+    public void setCrs(JCFootballOpenModelResultPoolrsInfo crs) {
         this.crs = crs;
     }
 
-    public JCFootballOpenModelResultPoolrsRs getHad() {
+    public JCFootballOpenModelResultPoolrsInfo getHad() {
         return had;
     }
 
-    public void setHad(JCFootballOpenModelResultPoolrsRs had) {
+    public void setHad(JCFootballOpenModelResultPoolrsInfo had) {
         this.had = had;
     }
 
-    public JCFootballOpenModelResultPoolrsRs getHafu() {
+    public JCFootballOpenModelResultPoolrsInfo getHafu() {
         return hafu;
     }
 
-    public void setHafu(JCFootballOpenModelResultPoolrsRs hafu) {
+    public void setHafu(JCFootballOpenModelResultPoolrsInfo hafu) {
         this.hafu = hafu;
     }
 
-    public JCFootballOpenModelResultPoolrsRs getHhad() {
+    public JCFootballOpenModelResultPoolrsInfo getHhad() {
         return hhad;
     }
 
-    public void setHhad(JCFootballOpenModelResultPoolrsRs hhad) {
+    public void setHhad(JCFootballOpenModelResultPoolrsInfo hhad) {
         this.hhad = hhad;
     }
 
-    public JCFootballOpenModelResultPoolrsRs getTtg() {
+    public JCFootballOpenModelResultPoolrsInfo getTtg() {
         return ttg;
     }
 
-    public void setTtg(JCFootballOpenModelResultPoolrsRs ttg) {
+    public void setTtg(JCFootballOpenModelResultPoolrsInfo ttg) {
         this.ttg = ttg;
     }
 }

@@ -1,8 +1,9 @@
 package com.imooc.heqi.JC.JCFootball.JCFootballScratcher;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.imooc.heqi.JC.JCFootball.JCFootballModel.JCFootballBfInfoModel;
 import com.imooc.heqi.JC.JCFootball.JCFootballModel.JCFootballInfoModel;
-import com.imooc.heqi.JC.JCFootball.JCFootballModel.JCFootballModel;
 import com.imooc.heqi.util.HttpUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -44,17 +45,14 @@ public class JCFootballBfJsonScratcher {
                 //开奖信息注入
                 Gson gson = new Gson();
                 logger.info("开始转换！");
-                JCFootballModel jcFootballBfModel = gson.fromJson(json, JCFootballModel.class);
-                for(Map.Entry<String, JCFootballInfoModel> entry:jcFootballBfModel.getData().entrySet()){
-                    JCFootballInfoModel result = entry.getValue();
-//                    logger.info(
-//                            "胜：" + result.getBf().getS() + " " +
-//                                    "平：" + result.getBf().getP() + " " +
-//                                    "负：" + result.getBf().getF() + " " +
-//                                    "123: " + result.getBf().getIntt()
-//                    );
+                JCFootballInfoModel<JCFootballBfInfoModel> jcFootballModel = gson.fromJson(json, new TypeToken<JCFootballInfoModel<JCFootballBfInfoModel>>() {}.getType());
+                for(Map.Entry<String,JCFootballBfInfoModel> entry:jcFootballModel.getData().entrySet()){
+                    JCFootballBfInfoModel result = entry.getValue();
+                    logger.info("p_code: " + result.getP_code());
+                    logger.info("-1-a: " + result.getFOther());
                 }
-
+//                logger.info("-------------------------------jcFootballSpfModel: " + jcFootballSpfModel.getData());
+//                logger.info("-------------------------------jcFootballSpfModel: " + jcFootballSpfModel.getData().get(0).get("a_cn"));
                 //TODO
             }
 

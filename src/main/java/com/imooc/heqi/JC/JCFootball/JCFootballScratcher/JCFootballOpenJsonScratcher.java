@@ -47,8 +47,8 @@ public class JCFootballOpenJsonScratcher {
 //                }
 
                 logger.info("开始转换！");
-                JCFootballOpenModel jcFootballKaiJiangModel = gson.fromJson(json, JCFootballOpenModel.class);
-                logger.info("-------------------------------jcFootballKaiJiangModel: " + jcFootballKaiJiangModel.getResult().getPool_rs().getHad().getPrs_name());
+                JCFootballOpenModel jcFootballOpenModel = gson.fromJson(json, JCFootballOpenModel.class);
+                logger.info("-------------------------------jcFootballKaiJiangModel: " + jcFootballOpenModel.getResult().getOdds_list().getHhad().getOdds().get(0).get("a"));
                 //TODO
             }
 
