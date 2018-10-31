@@ -11,8 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JCFootballHhScratcher {
-    private static final Logger logger = LoggerFactory.getLogger(JCFootballHhScratcher.class);
+public class JCFootballHhJsonScratcher {
+    private static final Logger logger = LoggerFactory.getLogger(JCFootballHhJsonScratcher.class);
 
     private String url;
 
@@ -78,7 +78,7 @@ public class JCFootballHhScratcher {
     public static void main(String[] args) {
         try {
             String url = "http://info.sporttery.cn/interface/interface_mixed.php?action=fb_list";
-            JCFootballHhScratcher scratcher = new JCFootballHhScratcher();
+            JCFootballHhJsonScratcher scratcher = new JCFootballHhJsonScratcher();
             scratcher.setUrl(url);
             scratcher.scratch();
         } catch (Exception e) {

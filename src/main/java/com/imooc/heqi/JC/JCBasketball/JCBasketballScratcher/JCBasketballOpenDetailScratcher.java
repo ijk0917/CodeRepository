@@ -1,4 +1,4 @@
-package com.imooc.heqi.JC.JCFootball.JCFootballScratcher;
+package com.imooc.heqi.JC.JCBasketball.JCBasketballScratcher;
 
 import com.imooc.heqi.util.JCScratcherConstant;
 import org.apache.commons.lang3.StringUtils;
@@ -15,11 +15,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JCFootballOpenScratcher {
-    private static final Logger logger = LoggerFactory.getLogger(JCFootballOpenScratcher.class);
+public class JCBasketballOpenDetailScratcher {
+    private static final Logger logger = LoggerFactory.getLogger(JCBasketballOpenDetailScratcher.class);
 
     private String url;
-    private String jsonUrl;
     private Integer page = 1;
     private String start_date;
     private String end_date;
@@ -34,14 +33,6 @@ public class JCFootballOpenScratcher {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public String getJsonUrl() {
-        return jsonUrl;
-    }
-
-    public void setJsonUrl(String jsonUrl) {
-        this.jsonUrl = jsonUrl;
     }
 
     public Integer getPage() {
@@ -109,23 +100,24 @@ public class JCFootballOpenScratcher {
             Elements tds = tr.select("td");
             for (int j = 0; j < tds.size(); j++) {
                 Element td = tds.get(j);
-//                if(j == 3) {
-//                    logger.info("td[" + j + "]: " + td.text());
-//                }
+                if(j == 3) {
+                    logger.info("td[" + j + "]: " + td.text());
+                }
 
                 //详情
-                if (10 == j) {
-                    String uurl = td.select("a").attr("href");
+                if (12 == j) {
+                    String subUrl = td.select("a").attr("href");
+                    logger.info("subUrl: " + subUrl);
 //                    logger.info("uurl: " + uurl);
-                    if (!StringUtils.isEmpty(uurl)) {
-                        //开奖
-                        String[] strings = uurl.split("=");
-                        String mid = strings[1];
+                    if (!StringUtils.isEmpty(subUrl)) {
                         //再次抓包
-                        JCFootballOpenDetailJsonScratcher footballKJJsonScratcher = new JCFootballOpenDetailJsonScratcher(jsonUrl + mid);
-                        String json = footballKJJsonScratcher.scratch();
-//                            logger.info("json: " + json);
-
+                        try {
+                            Document doc = Jsoup.connect(subUrl).userAgent("Mozilla").maxBodySize(1024 * 1024 * 10).timeout(1800000).get();
+                            Elements DetailTable = doc.select("body > div[class=all-wrap] > table");
+                            logger.info("DetailTable: " + DetailTable.size());
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
                     } else {
                         //未开奖
                     }
@@ -141,14 +133,15 @@ public class JCFootballOpenScratcher {
     public Map<String, List<String>> scratch() {
         if (null == url || "".equals(url)) return null;
         if (logger.isInfoEnabled()) {
-            logger.info("开始抓取竞彩网竞足开奖数据");
+            logger.info("开始抓取竞彩网竞篮开奖数据");
         }
         Map<String, List<String>> retVal = new HashMap<String, List<String>>();
         try {
+            logger.info("URL: " + URL());
             Document doc = Jsoup.connect(URL()).userAgent("Mozilla").maxBodySize(1024 * 1024 * 10).timeout(1800000).get();
-            Elements matchList = doc.select("body > div.all-wrap.m-min > div.match_list > table > tbody >tr");
+            Elements matchList = doc.select("body > div.all-wrap.m-min > div.match_list > table > tbody > tr");
             if(null == matchList)return  null;
-
+//            logger.info("matchList: " + matchList);
             Elements pages = doc.select("body > div.all-wrap.m-min > div.match_list > table > tbody > tr:last-child > td > table > tbody > tr > td > ul >li");
             if(null == pages)return  null;
             //组装比赛数据
@@ -156,7 +149,7 @@ public class JCFootballOpenScratcher {
 
             //翻页
             Integer Page = fianlPageNumber(pages);
-//            logger.info("Page: "+Page);
+            logger.info("Page: "+Page);
             for(int p = 2;p<=Page ;p++) {
                 this.page=p;
 //                logger.info("this.page: " +this.page);
@@ -174,7 +167,6 @@ public class JCFootballOpenScratcher {
             e.printStackTrace();
             logger.error("竞彩网竞足开奖数据抓包失败");
         }
-        logger.info("比赛总数： " + JCFootballOpenDetailJsonScratcher.total);
         return retVal;
     }
 
@@ -183,11 +175,9 @@ public class JCFootballOpenScratcher {
 
     public static void main(String[] args) {
         try {
-            String url = "http://info.sporttery.cn/football/match_result.php";
-            String jsonUrl = "http://i.sporttery.cn/api/fb_match_info/get_pool_rs/?f_callback=pool_prcess&mid=";
-            JCFootballOpenScratcher scratcher = new JCFootballOpenScratcher();
+            String url = "http://info.sporttery.cn/basketball/match_result.php";
+            JCBasketballOpenDetailScratcher scratcher = new JCBasketballOpenDetailScratcher();
             scratcher.setUrl(url);
-            scratcher.setJsonUrl(jsonUrl);
             SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd" );
             Date date= new Date();
             String time = sdf.format(date);

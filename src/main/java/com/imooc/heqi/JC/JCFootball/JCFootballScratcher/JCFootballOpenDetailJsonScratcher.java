@@ -7,17 +7,17 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JCFootballOpenJsonScratcher {
-    private static final Logger logger = LoggerFactory.getLogger(JCFootballOpenJsonScratcher.class);
+public class JCFootballOpenDetailJsonScratcher {
+    private static final Logger logger = LoggerFactory.getLogger(JCFootballOpenDetailJsonScratcher.class);
 
     private String url;
 
-    public JCFootballOpenJsonScratcher() {
+    public JCFootballOpenDetailJsonScratcher() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    public JCFootballOpenJsonScratcher(String url) {
+    public JCFootballOpenDetailJsonScratcher(String url) {
         super();
         this.url = url;
     }
@@ -77,7 +77,7 @@ public class JCFootballOpenJsonScratcher {
     public static void main(String[] args) {
         try {
             String url = "http://i.sporttery.cn/api/fb_match_info/get_pool_rs/?f_callback=pool_prcess&mid=112538";
-            JCFootballOpenJsonScratcher scratcher = new JCFootballOpenJsonScratcher(url);
+            JCFootballOpenDetailJsonScratcher scratcher = new JCFootballOpenDetailJsonScratcher(url);
             scratcher.scratch();
         } catch (Exception e) {
             e.printStackTrace();
